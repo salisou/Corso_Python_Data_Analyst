@@ -22,3 +22,13 @@ ORDER BY MediaVoti DESC
 		. Quante valutazioni ci sono state (COUNT)
 		. Ordina dal corso con la media più alta.
 */
+SELECT 
+	c.NomeCorso AS 'Nome del corso',
+	AVG(v.Voto) AS MediaCorso,
+	COUNT(v.Voto) AS NumeroEsami
+FROM Corso AS c
+	JOIN Iscrizione AS i ON c.CorsoId = i.CorsoId
+	JOIN Voto AS v ON v.IscrizioneId = i.IscrizioneId
+GROUP BY c.NomeCorso
+ORDER BY MediaCorso DESC
+
