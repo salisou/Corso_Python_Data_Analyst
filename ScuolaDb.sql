@@ -22,6 +22,8 @@ GO
 
 
 
+CREATE DATABASE Scuola_Db
+
 CREATE TABLE [dbo].[Studente](
     [StudenteId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
     [NomeStudente] NVARCHAR(100)  NOT NULL,
