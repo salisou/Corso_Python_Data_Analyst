@@ -1,17 +1,25 @@
--- Rimozione vincoli da Iscrizione
-ALTER TABLE [dbo].[Iscrizione] DROP CONSTRAINT [FK__Iscrizion__Stude__72C60C4A];
-ALTER TABLE [dbo].[Iscrizione] DROP CONSTRAINT [FK__Iscrizion__Corso__73BA3083];
-
--- Rimozione vincolo da Voto
-ALTER TABLE [dbo].[Voto] DROP CONSTRAINT [FK__Voto__Iscrizione__778AC167];
+USE [ScuolaDb];
 GO
 
--- Eliminazione tabelle
-DROP TABLE IF EXISTS [dbo].[Voto];
-DROP TABLE IF EXISTS [dbo].[Iscrizione];
-DROP TABLE IF EXISTS [dbo].[Corso];
-DROP TABLE IF EXISTS [dbo].[Studente];
+-- Rimuovi vincoli solo se esistono
+IF OBJECT_ID('dbo.Iscrizione', 'U') IS NOT NULL
+BEGIN
+    ALTER TABLE [dbo].[Iscrizione] DROP CONSTRAINT [FK__Iscrizion__Stude__72C60C4A];
+    ALTER TABLE [dbo].[Iscrizione] DROP CONSTRAINT [FK__Iscrizion__Corso__73BA3083];
+END
+
+IF OBJECT_ID('dbo.Voto', 'U') IS NOT NULL
+BEGIN
+    ALTER TABLE [dbo].[Voto] DROP CONSTRAINT [FK__Voto__Iscrizione__778AC167];
+END
+
+-- Elimina tabelle solo se esistono
+IF OBJECT_ID('dbo.Voto', 'U') IS NOT NULL DROP TABLE [dbo].[Voto];
+IF OBJECT_ID('dbo.Iscrizione', 'U') IS NOT NULL DROP TABLE [dbo].[Iscrizione];
+IF OBJECT_ID('dbo.Corso', 'U') IS NOT NULL DROP TABLE [dbo].[Corso];
+IF OBJECT_ID('dbo.Studente', 'U') IS NOT NULL DROP TABLE [dbo].[Studente];
 GO
+
 
 
 CREATE TABLE [dbo].[Studente](

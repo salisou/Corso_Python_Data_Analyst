@@ -33,6 +33,13 @@ GROUP BY c.NomeCorso
 ORDER BY MediaCorso DESC
 
 /*
+   Cos'è HAVING?
+    HAVING si usa dopo GROUP BY 
+		per filtrare i gruppi in base a condizioni 
+		su funzioni aggregate (AVG, COUNT, SUM, MIN, MAX, ecc.).
+    È simile a WHERE, ma WHERE filtra prima del raggruppamento, 
+	mentre HAVING filtra dopo.
+
    ⚠️ HAVING si usa dopo il GROUP BY (mentre WHERE filtra le righe prima del raggruppamento).
 */
 SELECT 
@@ -44,3 +51,8 @@ JOIN Voto AS v ON i.IscrizioneId = v.IscrizioneId
 GROUP BY c.NomeCorso
 HAVING AVG(v.Voto) >= 27
 ORDER BY MediaCorso DESC;
+
+
+
+
+
