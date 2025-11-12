@@ -1,9 +1,9 @@
-use ScuolaDb;
+﻿use ScuolaDb;
 
 /*
 	Raggruppare per studente (media voti)
 		Risultato: una riga per studente, 
-		con la media dei voti ordinata dal pi� alto al pi� basso.
+		con la media dei voti ordinata dal più alto al più basso.
 */
 SELECT 
 	s.NomeStudente AS 'Nome dello studente',
@@ -20,7 +20,7 @@ ORDER BY MediaVoti DESC
 	Ottieni:
 		. Media dei voti per corso
 		. Quante valutazioni ci sono state (COUNT)
-		. Ordina dal corso con la media pi� alta.
+		. Ordina dal corso con la media più alta.
 */
 SELECT 
 	c.NomeCorso AS 'Nome del corso',
@@ -32,3 +32,15 @@ FROM Corso AS c
 GROUP BY c.NomeCorso
 ORDER BY MediaCorso DESC
 
+/*
+   ⚠️ HAVING si usa dopo il GROUP BY (mentre WHERE filtra le righe prima del raggruppamento).
+*/
+SELECT 
+    c.NomeCorso,
+    AVG(v.Voto) AS MediaCorso
+FROM Corso AS c
+JOIN Iscrizione AS i ON c.CorsoId = i.CorsoId
+JOIN Voto AS v ON i.IscrizioneId = v.IscrizioneId
+GROUP BY c.NomeCorso
+HAVING AVG(v.Voto) >= 27
+ORDER BY MediaCorso DESC;
