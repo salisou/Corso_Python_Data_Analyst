@@ -97,10 +97,10 @@ ORDER BY v.voto DESC, s.NomeStudente
 SELECT 
     s.NomeStudente,
     v.Voto,
-    CASE
-        WHEN v.Voto >= 28 THEN 'Ottimo'
+     CASE
+        WHEN v.Voto >= 30 THEN 'Ottimo'
         WHEN v.Voto >= 24 THEN 'Buono'
-        WHEN v.Voto >= 18 THEN 'Sufficiente'
+        WHEN v.Voto >= 19 THEN 'Sufficiente'
         ELSE 'Insufficiente'
     END AS Esito
 FROM Studente AS s
@@ -138,3 +138,5 @@ WHERE s.NomeStudente LIKE 'S%'
 -- ORDINARE PRE VOTO IN DESC(DESCENDENTE)
 -- ORDINARE PRE NOME DELLO STUDENTE ASC(CRESCENTE(DEFAULT))
 ORDER BY v.voto DESC, s.NomeStudente
+
+
