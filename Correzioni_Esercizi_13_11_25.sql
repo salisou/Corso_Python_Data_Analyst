@@ -2,6 +2,7 @@
 
 -- 1 Trova gli studenti che hanno un voto superiore alla media del loro corso
 
+
 SELECT 
     s.NomeStudente,     
     c.NomeCorso,        
