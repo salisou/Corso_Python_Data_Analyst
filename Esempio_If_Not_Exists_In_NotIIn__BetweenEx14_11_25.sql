@@ -87,5 +87,24 @@ WHERE s.StudenteId IN
 
 
 -- Esercizio: 1 Restutuire la lista degli studenti con almeno 2 voti in corsi specifici(IN+GROUP BY+HAVING)
+--SELECT
+--FROM
+--WHERE 
+--GROUP BY
+--HAVING
+--ORDER BY
+
 -- Esercizio: 2 Restutuire la lista degli studenti che hanno voti solo in corsi tecnici(NOT INT+GROUP BY)
+--SELECT
+--FROM
+--WHERE
+--GROUP BY
+--HAVING
+
+
 -- Esercizio: 3 Restutuire la media dei voti per corso, solo per corsi selezionati(AVG+ GROUP BY+ HAVING CON ORDERBY)
+--SELECT
+--FROM
+--GROUP BY
+--HAVING
+--ORDER BY
