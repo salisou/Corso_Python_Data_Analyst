@@ -103,19 +103,31 @@ ORDER BY NumeroVoti DESC
 
 
 -- Esercizio: 2 Restutuire la lista degli studenti che hanno voti solo in corsi tecnici(NOT INT+GROUP BY)
---SELECT
---FROM
---WHERE
---GROUP BY
---HAVING
+SELECT 
+    s.StudenteId,
+    s.NomeStudente,
+    s.CognomeStudente,
+    COUNT(v.VotoId) AS NumeroVoti
+FROM Voto v
+    INNER JOIN Iscrizione i ON v.IscrizioneId = i.IscrizioneId
+    INNER JOIN Studente s ON i.StudenteId = s.StudenteId
+    INNER JOIN Corso c ON i.CorsoId = c.CorsoId
+WHERE c.NomeCorso NOT IN ('Programmazione C#', 'Entity Framework Core', 'ASP.NET Core MVC')
+GROUP BY s.StudenteId, s.NomeStudente, s.CognomeStudente
+HAVING COUNT(v.VotoId) >= 1;
 
 
 -- Esercizio: 3 Restutuire la media dei voti per corso, solo per corsi selezionati(AVG+ GROUP BY+ HAVING CON ORDERBY)
---SELECT
---FROM
---GROUP BY
---HAVING
---ORDER BY
+SELECT 
+    c.NomeCorso,
+    AVG(v.Voto) AS MediaVoti
+FROM Voto v
+    INNER JOIN Iscrizione i ON v.IscrizioneId = i.IscrizioneId
+    INNER JOIN Corso c ON i.CorsoId = c.CorsoId
+WHERE c.NomeCorso IN ('HTML e CSS', 'UX/UI Design', 'Git e Controllo Versione')
+GROUP BY c.NomeCorso
+HAVING AVG(v.Voto) >= 25
+ORDER BY MediaVoti DESC;
 
 -- 4 Restituisce la lista degli studenti con voti in corsi selezionati, 
 -- ma non in altri (IN+ NOT IN Con Subquery) 
