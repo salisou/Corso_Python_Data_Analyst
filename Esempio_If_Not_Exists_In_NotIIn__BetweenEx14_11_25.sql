@@ -87,12 +87,20 @@ WHERE s.StudenteId IN
 
 
 -- Esercizio: 1 Restutuire la lista degli studenti con almeno 2 voti in corsi specifici(IN+GROUP BY+HAVING)
---SELECT
---FROM
---WHERE 
---GROUP BY
---HAVING
---ORDER BY
+SELECT 
+    s.StudenteId,
+    s.NomeStudente,
+    s.CognomeStudente,
+    COUNT(v.VotoId) AS NumeroVoti
+FROM Voto v
+    INNER JOIN Iscrizione i ON v.IscrizioneId = i.IscrizioneId
+    INNER JOIN Studente s ON i.StudenteId = s.StudenteId
+    INNER JOIN Corso c ON i.CorsoId = c.CorsoId
+WHERE c.CorsoId IN (1,2,3)
+GROUP BY s.StudenteId, s.NomeStudente, s.CognomeStudente
+HAVING COUNT(v.VotoId) >= 2
+ORDER BY NumeroVoti DESC
+
 
 -- Esercizio: 2 Restutuire la lista degli studenti che hanno voti solo in corsi tecnici(NOT INT+GROUP BY)
 --SELECT
@@ -108,3 +116,17 @@ WHERE s.StudenteId IN
 --GROUP BY
 --HAVING
 --ORDER BY
+
+-- 4 Restituisce la lista degli studenti con voti in corsi selezionati, 
+-- ma non in altri (IN+ NOT IN Con Subquery) 
+SELECT 
+	s.StudenteId,
+	s.NomeStudente, 
+	s.CognomeStudente
+FROM Studente s
+WHERE s.StudenteId IN (-- Corsi selezionati
+	SELECT i.IscrizioneId FROM Iscrizione i WHERE CorsoId IN (1,2,3)
+)
+AND s.StudenteId NOT IN (-- corsi de escludere 
+	SELECT StudenteId FROM Iscrizione WHERE CorsoId	IN (4,5,6) 
+);
