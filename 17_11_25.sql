@@ -91,6 +91,14 @@ INSERT INTO Prodotti (NomeProdotto, Descrizione, Prezzo, Quantita)
 VALUES ('Laptop Hp', 'Notebook 15.6 pollici', 899.99, 10),
        ('Mouse Logitech', 'Mouse wireless', 75.99, 50),
        ('Monitor Samsung', 'Monitor 36 pollici', 449.99, 45)
+SELECT 
+	s.StudenteId as 'Matricola',
+	s.NomeStudente as 'Nome dello studente',
+	s.CognomeStudente as 'Cognome dello studente',
+	c.NomeCorso as 'Nome del corsi'
+FROM Iscrizione AS i, Corso AS c, Studente AS s
+WHERE i.CorsoId = c.CorsoId and 
+	  i.StudenteId = s.StudenteId
 
 SELECT * FROM Prodotti;
 
