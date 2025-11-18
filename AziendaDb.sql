@@ -4,7 +4,7 @@ USE AziendaDB;
 
 -- Tabella Clienti
 CREATE TABLE Clienti (
-    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT PRIMARY KEY INDENTITY(1,1),
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE Clienti (
 
 -- Tabella Dipendenti
 CREATE TABLE Dipendenti (
-    id_dipendente INT PRIMARY KEY AUTO_INCREMENT,
+    id_dipendente INT PRIMARY KEY INDENTITY(1,1),
     nome VARCHAR(100) NOT NULL,
     cognome VARCHAR(100) NOT NULL,
     ruolo VARCHAR(100),
@@ -25,7 +25,7 @@ CREATE TABLE Dipendenti (
 
 -- Tabella Prodotti
 CREATE TABLE Prodotti (
-    id_prodotto INT PRIMARY KEY AUTO_INCREMENT,
+    id_prodotto INT PRIMARY KEY INDENTITY(1,1),
     nome VARCHAR(150) NOT NULL,
     descrizione TEXT,
     prezzo DECIMAL(10,2) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE Prodotti (
 
 -- Tabella Ordini
 CREATE TABLE Ordini (
-    id_ordine INT PRIMARY KEY AUTO_INCREMENT,
+    id_ordine INT PRIMARY KEY INDENTITY(1,1),
     id_cliente INT NOT NULL,
     data_ordine DATE DEFAULT CURRENT_DATE,
     totale DECIMAL(10,2),
@@ -43,7 +43,7 @@ CREATE TABLE Ordini (
 
 -- Tabella Dettagli Ordine
 CREATE TABLE DettagliOrdine (
-    id_dettaglio INT PRIMARY KEY AUTO_INCREMENT,
+    id_dettaglio INT PRIMARY KEY INDENTITY(1,1),
     id_ordine INT NOT NULL,
     id_prodotto INT NOT NULL,
     quantita INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE DettagliOrdine (
 
 -- Tabella Fatture
 CREATE TABLE Fatture (
-    id_fattura INT PRIMARY KEY AUTO_INCREMENT,
+    id_fattura INT PRIMARY KEY INDENTITY(1,1),
     id_ordine INT NOT NULL,
     data_fattura DATE DEFAULT CURRENT_DATE,
     importo DECIMAL(10,2),
