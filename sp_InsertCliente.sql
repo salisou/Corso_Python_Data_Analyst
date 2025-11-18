@@ -13,7 +13,7 @@ BEGIN
 END
 GO
 
--- Chiamate della store procedure 
+-- Chiamate della sp_InsertCliente
 DECLARE	@return_value int 
 
 EXEC	@return_value = sp_InsertCliente
