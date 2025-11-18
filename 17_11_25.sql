@@ -53,6 +53,18 @@ CREATE TABLE Dipendenti
     DataAssunzione DATE 
 );
 
+-- Aggiunta della colonna DipendentiId
+ALTER TABLE Ordini
+ADD DipendentiId INT NULL
+
+ALTER TABLE Ordini
+ADD CONSTRAINT FK_Ordini_Dipendenti
+FOREIGN KEY (DipendenteId) REFERENCES  Dipendenti(DipendenteId)
+
+SELECT * FROM Ordini
+
+
+
 
 -- ======== TABELLA FATTURE =============
 CREATE TABLE Fattura 
@@ -106,4 +118,18 @@ SELECT * FROM Prodotti;
 INSERT INTO Ordini (ClienteId, Dara_Ordine, Totale)
 VALUES (1, CAST(GETDATE() AS DATE), 1200);
 
+INSERT INTO Ordini (ClienteId, Dara_Ordine, Totale)
+VALUES (2, CAST(GETDATE() AS DATE), 75.99);
+
+INSERT INTO Ordini (ClienteId, Dara_Ordine, Totale)
+VALUES (3, CAST(GETDATE() AS DATE), 19.99);
+
+
 SELECT * FROM Ordini;
+
+SELECT * FROM DetaglioOrdine
+
+INSERT INTO DetaglioOrdine (CodiceOrdine,ProdottoId, Quantita, Prezzo_Unitario)
+VALUES (1, 1, 1, 899.99),
+	   (1, 2, 1, 75.99),
+	   (2, 3, 1, 449.99)
