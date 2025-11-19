@@ -4,61 +4,60 @@ USE AziendaDB;
 
 -- Tabella Clienti
 CREATE TABLE Clienti (
-    id_cliente INT PRIMARY KEY INDENTITY(1,1),
-    nome VARCHAR(100) NOT NULL,
-    cognome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    telefono VARCHAR(50),
-    indirizzo VARCHAR(255),
-    data_registrazione DATE DEFAULT CURRENT_DATE
+    ClienteId INT PRIMARY KEY INDENTITY(1,1),
+    Nome VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) UNIQUE NOT NULL,
+    Telefono VARCHAR(50),
+    Indirizzo VARCHAR(255),
+    Data_Registrazione DATE DEFAULT CURRENT_DATE
 );
 
 -- Tabella Dipendenti
 CREATE TABLE Dipendenti (
-    id_dipendente INT PRIMARY KEY INDENTITY(1,1),
-    nome VARCHAR(100) NOT NULL,
-    cognome VARCHAR(100) NOT NULL,
-    ruolo VARCHAR(100),
-    stipendio DECIMAL(10,2),
-    data_assunzione DATE
+    DipendenteId INT PRIMARY KEY INDENTITY(1,1),
+    Nome VARCHAR(100) NOT NULL,
+    Cognome VARCHAR(100) NOT NULL,
+    Ruolo VARCHAR(100),
+    Stipendio DECIMAL(10,2),
+    Data_Assunzione DATE
 );
 
 -- Tabella Prodotti
 CREATE TABLE Prodotti (
-    id_prodotto INT PRIMARY KEY INDENTITY(1,1),
-    nome VARCHAR(150) NOT NULL,
-    descrizione TEXT,
-    prezzo DECIMAL(10,2) NOT NULL,
-    quantita INT DEFAULT 0
+    ProdottoId INT PRIMARY KEY INDENTITY(1,1),
+    Nome VARCHAR(150) NOT NULL,
+    Descrizione TEXT,
+    Prezzo DECIMAL(10,2) NOT NULL,
+    Quantita INT DEFAULT 0
 );
 
 -- Tabella Ordini
 CREATE TABLE Ordini (
-    id_ordine INT PRIMARY KEY INDENTITY(1,1),
-    id_cliente INT NOT NULL,
-    data_ordine DATE DEFAULT CURRENT_DATE,
-    totale DECIMAL(10,2),
-    FOREIGN KEY (id_cliente) REFERENCES Clienti(id_cliente)
+    CodiceOrdine INT PRIMARY KEY INDENTITY(1,1),
+    ClienteId INT NOT NULL,
+    Data_Ordine DATE DEFAULT CURRENT_DATE,
+    Totale DECIMAL(10,2),
+    FOREIGN KEY (ClienteId) REFERENCES Clienti(ClienteId)
 );
 
 -- Tabella Dettagli Ordine
 CREATE TABLE DettagliOrdine (
-    id_dettaglio INT PRIMARY KEY INDENTITY(1,1),
-    id_ordine INT NOT NULL,
-    id_prodotto INT NOT NULL,
-    quantita INT NOT NULL,
-    prezzo_unitario DECIMAL(10,2),
-    FOREIGN KEY (id_ordine) REFERENCES Ordini(id_ordine),
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotti(id_prodotto)
+    DettaglioId INT PRIMARY KEY INDENTITY(1,1),
+    CodiceOrdine INT NOT NULL,
+    ProdottoId INT NOT NULL,
+    Quantita INT NOT NULL,
+    Prezzo_unitario DECIMAL(10,2),
+    FOREIGN KEY (CodiceOrdine) REFERENCES Ordini(CodiceOrdine),
+    FOREIGN KEY (ProdottoId) REFERENCES Prodotti(ProdottoId)
 );
 
 -- Tabella Fatture
 CREATE TABLE Fatture (
-    id_fattura INT PRIMARY KEY INDENTITY(1,1),
-    id_ordine INT NOT NULL,
-    data_fattura DATE DEFAULT CURRENT_DATE,
-    importo DECIMAL(10,2),
-    FOREIGN KEY (id_ordine) REFERENCES Ordini(id_ordine)
+    FatturaId INT PRIMARY KEY INDENTITY(1,1),
+    CodiceOrdine INT NOT NULL,
+    Data_Fattura DATE DEFAULT CURRENT_DATE,
+    Importo DECIMAL(10,2),
+    FOREIGN KEY (CodiceOrdine) REFERENCES Ordini(CodiceOrdine)
 );
 
 
