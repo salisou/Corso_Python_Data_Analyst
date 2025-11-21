@@ -29,6 +29,35 @@ GO
 
 
 -- InserisciStudente (controllo email duplicata)
+/*
+CREATE PROCEDURE sp_InserisciCorso
+    @NomeCorso NVARCHAR(100),
+    @Descrizione NVARCHAR(100),
+    @Crediti INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        -- Controlla se il corso esiste già
+        IF EXISTS (SELECT 1 FROM Corso WHERE NomeCorso = @NomeCorso)
+        BEGIN
+            PRINT 'Corso già esistente. Nessun inserimento effettuato.';
+            
+            RETURN;
+        END
+
+        -- Inserisce il corso
+        INSERT INTO Corso (NomeCorso, Descrizione, Crediti)
+        VALUES (@NomeCorso, @Descrizione, @Crediti);
+
+
+        PRINT 'Corso inserito correttamente.';
+    END TRY
+    BEGIN CATCH
+    END CATCH
+END;
+GO
+*/
 
 CREATE PROCEDURE sp_InserisciCorso
     @NomeCorso NVARCHAR(100),
@@ -37,10 +66,13 @@ CREATE PROCEDURE sp_InserisciCorso
 AS
 BEGIN
     BEGIN TRY
+        BEGIN TRANSACTION;
+
         -- Controlla se il corso esiste già
         IF EXISTS (SELECT 1 FROM Corso WHERE NomeCorso = @NomeCorso)
         BEGIN
-            PRINT 'Corso già esistente. Nessun inserimento effettuato.';
+            RAISERROR('Corso già esistente. Nessun inserimento effettuato.', 16, 1);
+            ROLLBACK TRANSACTION;
             RETURN;
         END
 
@@ -48,20 +80,27 @@ BEGIN
         INSERT INTO Corso (NomeCorso, Descrizione, Crediti)
         VALUES (@NomeCorso, @Descrizione, @Crediti);
 
+        COMMIT TRANSACTION;
         PRINT 'Corso inserito correttamente.';
     END TRY
     BEGIN CATCH
+        -- Se errore, rollback
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        PRINT 'Errore durante l’inserimento del corso.';
+        PRINT ERROR_MESSAGE(); -- Mostra il messaggio di errore SQL Server
     END CATCH
 END;
 GO
 
+SELECT * FROM Corso
 
+EXEC sp_InserisciCorso
+    @NomeCorso = 'Programmazione C#',
+    @Descrizione = 'Corso di programmazione avanzata con C# e .NET',
+    @Crediti = 6;
 
-EXEC InsertStudente
-	@Nome = '',
-	@Cognome = '',
-	@DataNascita ='',
-	@Email = '';
 
 GO
 
@@ -72,7 +111,7 @@ CREATE PROCEDURE sp_InserisciIscrizione
     @DataIscrizione DATE
 AS
 BEGIN
-    BEGIN TRY
+    BEGIN TRY -- TRY {CONDIZIONE} CATCH {CONDIZIONE Se c'è errore > 0 PRINT''': PRINT  }
         -- Controlla se lo studente esiste
         IF NOT EXISTS (SELECT 1 FROM Studente WHERE StudenteId = @StudenteId)
         BEGIN
@@ -80,7 +119,6 @@ BEGIN
             ROLLBACK TRANSACTION;
             RETURN;
         END
-
         -- Controlla se il corso esiste
         IF NOT EXISTS (SELECT 1 FROM Corso WHERE CorsoId = @CorsoId)
         BEGIN
