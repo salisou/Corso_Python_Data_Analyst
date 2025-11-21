@@ -101,7 +101,7 @@ UPDATE Corso
 SET DocenteId = 1
 WHERE CorsoId = 3;
 
-
+select * from Corso
 --===================Inerimenti=========================
 
 -- Studenti Insert
@@ -186,5 +186,5 @@ VALUES
 
 -- Inserire un docente
 INSERT INTO Docente (NomeDocente, CognomeDocente, Email)
-VALUES ('Luca', 'Ferrari', 'luca.ferrari@scuola.it');
+VALUES ('Moussa', 'Salisou', 'm.salisou@scuola.it');
 
