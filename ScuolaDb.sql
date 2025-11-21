@@ -1,4 +1,4 @@
-USE [ScuolaDb];
+﻿USE [ScuolaDb];
 GO
 
 -- Rimuovi vincoli solo se esistono
@@ -72,6 +72,35 @@ ALTER TABLE [dbo].[Voto] WITH CHECK ADD FOREIGN KEY([IscrizioneId])
 REFERENCES [dbo].[Iscrizione] ([IscrizioneId]);
 GO
 
+CREATE TABLE Docente (
+    DocenteId INT IDENTITY(1,1) PRIMARY KEY,
+    NomeDocente NVARCHAR(100) NOT NULL,
+    CognomeDocente NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(150) UNIQUE NOT NULL,
+    DataAssunzione DATE DEFAULT GETDATE()
+);
+
+-- Collegare Docente e Corso
+/*
+    Ogni Corso viene assegnato a un docente.
+    Quindi aggiungiamo la colonna DocenteId nella tabella Corso.
+*/
+
+-- Aggiunta della colonna
+ALTER TABLE Corso
+ADD DocenteId INT;
+
+-- Aggiunta della Foreign Key
+ALTER TABLE Corso
+ADD CONSTRAINT FK_Corso_Docente
+FOREIGN KEY (DocenteId) REFERENCES Docente(DocenteId);
+
+
+-- Assegnazione docente → corso
+UPDATE Corso
+SET DocenteId = 1
+WHERE CorsoId = 3;
+
 
 --===================Inerimenti=========================
 
@@ -124,8 +153,8 @@ VALUES
 ('Testing e Debugging', 'Tecniche di test unitario e debugging in C#', 4),
 ('Sicurezza Web', 'Principi di sicurezza nelle applicazioni web', 3),
 ('REST API con .NET', 'Creazione e consumo di API RESTful con ASP.NET Core', 5),
-('UX/UI Design', 'Progettazione dell�esperienza utente e interfacce grafiche', 3),
-('Progetto Finale', 'Sviluppo di un�applicazione completa in team', 6),
+('UX/UI Design', 'Progettazione dell’esperienza utente e interfacce grafiche', 3),
+('Progetto Finale', 'Sviluppo di un’applicazione completa in team', 6),
 ('Cloud Computing', 'Introduzione ai servizi cloud con Azure', 4);
 
 -- Insert Iscrizioni
@@ -154,4 +183,8 @@ VALUES
 (21, 25, '2025-02-04'), (22, 30, '2025-02-05'), (23, 28, '2025-02-06'), (24, 30, '2025-02-07'),
 (25, 26, '2025-02-08'), (26, 30, '2025-02-09'), (27, 29, '2025-02-10'), (28, 30, '2025-02-11'),
 (29, 30, '2025-02-12'), (30, 30, '2025-02-13');
+
+-- Inserire un docente
+INSERT INTO Docente (NomeDocente, CognomeDocente, Email)
+VALUES ('Luca', 'Ferrari', 'luca.ferrari@scuola.it');
 

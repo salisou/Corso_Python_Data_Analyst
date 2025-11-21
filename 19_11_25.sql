@@ -125,7 +125,7 @@ BEGIN
         quantita = @quantita
     WHERE ProdottoId = @prodottoId;
 END;
-GO
+GO;
 
 
 -- DELETE
@@ -273,3 +273,56 @@ BEGIN
 END;
 GO
 
+--=SELECT, JOIN, HAVIN, GROUP BY, ORDER BY, SUM, AVG, MIN, MAX, TOP, IF NOT EXISTS, IN, NOT IN 
+--=CASE WHEN ELSE, 
+-- Totale speso da ogni cliente
+/*
+Nome del cliente
+Email
+Totale speso (somma delle fatture agli ordini)
+*/
+SELECT 
+	c.Nome AS 'Nome del cliente',
+	c.IndirizzoMail,
+	SUM(f.Importo) AS 'Totale speso' 
+FROM Clienti AS c
+INNER JOIN Ordini AS o ON o.ClienteId = c.ClienteId
+INNER JOIN Fattura AS f ON f.CodiceOrdine = o.CodiceOrdine
+GROUP BY c.Nome, c.IndirizzoMail
+
+
+--Uso del HAVING per filtrare solo i clienti che hanno speso più di 180€
+SELECT 
+	c.Nome AS 'Nome del cliente',
+	c.IndirizzoMail,
+	SUM(f.Importo) AS 'Totale speso' 
+FROM Clienti c
+INNER JOIN Ordini AS o ON o.ClienteId = c.ClienteId
+INNER JOIN Fattura AS f ON f.CodiceOrdine = o.CodiceOrdine
+GROUP BY c.Nome, c.IndirizzoMail
+HAVING SUM(f.Importo) <= 180;
+
+
+
+
+SELECT 
+    c.Nome AS Cliente,
+    c.IndirizzoMail,
+    COUNT(DISTINCT o.CodiceOrdine) AS NumeroOrdini,
+    SUM(do.Quantita) AS TotaleProdottiAcquistati,
+    SUM(f.Importo) AS TotaleSpeso
+FROM Clienti c
+JOIN Ordini o ON c.ClienteId = o.ClienteId
+JOIN Dipendenti d ON o.DipendenteId = d.DipendenteId
+JOIN DetaglioOrdine do ON o.CodiceOrdine = do.CodiceOrdine
+JOIN Fattura f ON o.CodiceOrdine = f.CodiceOrdine
+GROUP BY c.Nome, c.IndirizzoMail
+--- HAVING ........
+ORDER BY TotaleSpeso
+
+SELECT * FROM Clienti
+SELECT * FROM Ordini
+SELECT * FROM Fattura
+SELECT * FROM DetaglioOrdine
+SELECT * FROM Prodotti
+SELECT * FROM Dipendenti
