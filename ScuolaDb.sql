@@ -79,6 +79,10 @@ CREATE TABLE Docente (
     Email NVARCHAR(150) UNIQUE NOT NULL,
     DataAssunzione DATE DEFAULT GETDATE()
 );
+---- Assicurati che la colonna Email abbia un vincolo UNIQUE:
+ALTER TABLE Docente
+ADD CONSTRAINT uq_docente_email UNIQUE (Email);
+
 
 -- Collegare Docente e Corso
 /*
@@ -104,7 +108,7 @@ WHERE CorsoId = 3;
 select * from Corso
 --===================Inerimenti=========================
 
--- Studenti Insert
+-- Insert Studenti 
 INSERT INTO [dbo].[Studente] ([NomeStudente], [CognomeStudente], [DataNascita], [Email])
 VALUES 
 ('Ilaria', 'Colombraro', '2000-12-12', 'ilaria.colombraro@gmail.com'),
@@ -186,5 +190,9 @@ VALUES
 
 -- Inserire un docente
 INSERT INTO Docente (NomeDocente, CognomeDocente, Email)
-VALUES ('Moussa', 'Salisou', 'm.salisou@scuola.it');
+VALUES
+('Moussa', 'Salisou', 'm.salisou@scuola.it'),
+('Giulia', 'Rossi', 'g.rossi@scuola.it'),
+('Luca', 'Bianchi', 'l.bianchi@scuola.it'),
+('Sara', 'Verdi', 's.verdi@scuola.it');
 
