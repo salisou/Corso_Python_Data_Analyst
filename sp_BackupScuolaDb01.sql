@@ -1,6 +1,6 @@
-﻿BACKUP DATABASE ScuolaDb
-TO  DISK = N'H:\Dev\TalentForm\Corso_SqlServer\ScuolaDb.bak' 
-WITH INIT;
+﻿--BACKUP DATABASE ScuolaDb
+--TO  DISK = N'H:\Dev\TalentForm\Corso_SqlServer\ScuolaDb.bak' 
+--WITH INIT;
 
 
 
@@ -12,7 +12,7 @@ WITH INIT;
 -- Create date: 09/12/25
 -- Description:	Back-Up SuolaDb 
 -- =============================================
-CREATE OR ALTER  sp_BackupScuolaDb01
+CREATE OR ALTER PROCEDURE sp_BackupScuolaDb01
     @BackupPath NVARCHAR(300) = 'H:\Dev\TalentForm\Corso_SqlServer\' 
 AS
 BEGIN
@@ -44,7 +44,7 @@ BEGIN
         -- Esecuzione del backup
         EXEC(@SQL);
 
-        PRINT '✔ Back-up completato con successo: ' + @BackupFile;
+        PRINT '✔ Back-up completato con successo: 🎉🎉🎉🎉' + @BackupFile;
 
     END TRY
     BEGIN CATCH
@@ -60,7 +60,6 @@ BEGIN
     END CATCH
 END
 GO
-
 
 EXEC sp_BackupScuolaDb01 
 
